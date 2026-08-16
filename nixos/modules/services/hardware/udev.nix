@@ -167,31 +167,6 @@ let
         ''}
       '';
 
-  hwdbBin =
-    pkgs.runCommand "hwdb.bin"
-      {
-        preferLocalBuild = true;
-        allowSubstitutes = false;
-        packages = lib.unique (map toString ([ udev ] ++ cfg.packages));
-      }
-      ''
-        mkdir -p etc/udev/hwdb.d
-        for i in $packages; do
-          echo "Adding hwdb files for package $i"
-          for j in $i/{etc,lib}/udev/hwdb.d/*; do
-            # This must be a copy, not a symlink, because --root below will chase links within the root argument.
-            cp $j etc/udev/hwdb.d/$(basename $j)
-          done
-        done
-
-        echo "Generating hwdb database..."
-        # hwdb --update doesn't return error code even on errors!
-        res="$(${pkgs.buildPackages.systemd}/bin/systemd-hwdb --root=$(pwd) update 2>&1)"
-        echo "$res"
-        [ -z "$(echo "$res" | egrep '^Error')" ]
-        mv etc/udev/hwdb.bin $out
-      '';
-
   compressFirmware =
     firmware:
     if
@@ -508,7 +483,6 @@ in
         binPackages = cfg.packages;
         inherit udevPath udev;
       };
-      "udev/hwdb.bin".source = hwdbBin;
     }
     // lib.optionalAttrs config.boot.modprobeConfig.enable {
       # We don't place this into `extraModprobeConfig` so that stage-1 ramdisk doesn't bloat.
