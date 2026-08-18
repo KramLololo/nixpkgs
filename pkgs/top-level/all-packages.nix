@@ -4950,20 +4950,18 @@ with pkgs;
     makeOverridable
       (
         { stdenv, ... }@extraArgs:
-        overrideCC
-          (stdenv.override lib.optionalAttrs (builtins.hasAttr "extraAttrs" extraArgs) {
+        (overrideCC stdenv (
+          buildPackages.ccacheWrapper.override (
+            {
+              inherit (stdenv) cc;
+            }
+            // lib.optionalAttrs (builtins.hasAttr "extraConfig" extraArgs) {
+              inherit (extraArgs) extraConfig;
+            }
+          )
+        )).override (lib.optionalAttrs (builtins.hasAttr "extraAttrs" extraArgs) {
             inherit (extraArgs) extraAttrs;
           })
-          (
-            buildPackages.ccacheWrapper.override (
-              {
-                inherit (stdenv) cc;
-              }
-              // lib.optionalAttrs (builtins.hasAttr "extraConfig" extraArgs) {
-                inherit (extraArgs) extraConfig;
-              }
-            )
-          )
       )
       {
         inherit stdenv;
