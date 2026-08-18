@@ -4958,14 +4958,14 @@ with pkgs;
             // lib.optionalAttrs (builtins.hasAttr "extraConfig" extraArgs) {
               inherit (extraArgs) extraConfig;
             }
-            // lib.optionalAttrs (builtins.hasAttr "extraAttrs" extraArgs) {
-              inherit (extraArgs) extraAttrs;
-            }
           )
         )
       )
       {
         inherit stdenv;
+      }
+      // lib.optionalAttrs (builtins.hasAttr "extraAttrs" extraArgs) {
+        inherit (extraArgs) extraAttrs;
       }
   );
 
