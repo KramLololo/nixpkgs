@@ -4956,7 +4956,10 @@ with pkgs;
               inherit (stdenv) cc;
             }
             // lib.optionalAttrs (builtins.hasAttr "extraConfig" extraArgs) {
-              extraConfig = extraArgs.extraConfig;
+              inherit (extraArgs) extraConfig;
+            }
+            // lib.optionalAttrs (builtins.hasAttr "extraAttrs" extraArgs) {
+              inherit (extraArgs) extraAttrs;
             }
           )
         )
