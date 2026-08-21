@@ -82,7 +82,7 @@ stdenv.mkDerivation (finalAttrs: {
   ] ++ lib.optional redisSupport hiredis;
 
   cmakeFlags = lib.optional (!finalAttrs.finalPackage.doCheck) "-DENABLE_TESTING=OFF"
-    ++ lib.optionals !redisSupport [ "-DREDIS_STORAGE_BACKEND=OFF" "-DHTTP_STORAGE_BACKEND=OFF" "-DENABLE_DOCUMENTATION=OFF" ];
+    ++ lib.optionals (!redisSupport) [ "-DREDIS_STORAGE_BACKEND=OFF" "-DHTTP_STORAGE_BACKEND=OFF" "-DENABLE_DOCUMENTATION=OFF" ];
 
   doCheck = true;
 
