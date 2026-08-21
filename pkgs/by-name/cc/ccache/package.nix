@@ -9,6 +9,7 @@
   perl,
   fmt,
   hiredis,
+  redisSupport ? false,
   xxhash,
   zstd,
   bashInteractive,
@@ -76,10 +77,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     fmt
-    hiredis
     xxhash
     zstd
-  ];
+  ] ++ lib.optional redisSupport hiredis;
 
   cmakeFlags = lib.optional (!finalAttrs.finalPackage.doCheck) "-DENABLE_TESTING=OFF";
 
