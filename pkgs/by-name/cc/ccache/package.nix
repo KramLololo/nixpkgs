@@ -45,11 +45,6 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-A0n+DO6IznETsAFUNIpBkQI6A3UilgEUbuyP3sqKDTk=";
   };
 
-  outputs = [
-    "out"
-    "man"
-  ];
-
   patches = [
     # When building for Darwin, test/run uses dwarfdump, whereas on
     # Linux it uses objdump. We don't have dwarfdump packaged for
