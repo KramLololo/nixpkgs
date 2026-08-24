@@ -1,12 +1,12 @@
 {
   lib,
-  clangStdenv,
+  llvmPackages,
   fetchFromGitHub,
   cmake,
   robin-map,
 }:
 
-clangStdenv.mkDerivation (finalAttrs: {
+llvmPackages.stdenv.mkDerivation (finalAttrs: {
   pname = "gnustep-libobjc";
   version = "2.3";
 
@@ -25,7 +25,6 @@ clangStdenv.mkDerivation (finalAttrs: {
   cmakeFlags = [ "-DCMAKE_INSTALL_LIBDIR=lib" ];
 
   meta = {
-    broken = clangStdenv.hostPlatform.isDarwin;
     description = "Objective-C runtime for use with GNUstep";
     homepage = "https://gnustep.github.io/";
     license = lib.licenses.mit;
