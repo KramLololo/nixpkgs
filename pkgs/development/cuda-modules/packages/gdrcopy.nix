@@ -1,6 +1,6 @@
 {
   _cuda,
-  gcc14Stdenv,
+  gcc13Stdenv,
   cuda_cudart,
   cuda_nvcc,
   cudaMajorMinorVersion,
@@ -16,7 +16,7 @@ let
   inherit (_cuda.lib) _mkMetaBadPlatforms;
   inherit (lib) licenses maintainers teams;
 in
-gcc14Stdenv.mkDerivation (finalAttrs: {
+gcc13Stdenv.mkDerivation (finalAttrs: {
   __structuredAttrs = true;
   strictDeps = true;
 
