@@ -1,6 +1,6 @@
 {
   _cuda,
-  backendStdenv,
+  gcc14Stdenv,
   cuda_cudart,
   cuda_nvcc,
   cudaMajorMinorVersion,
@@ -16,7 +16,7 @@ let
   inherit (_cuda.lib) _mkMetaBadPlatforms;
   inherit (lib) licenses maintainers teams;
 in
-backendStdenv.mkDerivation (finalAttrs: {
+gcc14Stdenv.mkDerivation (finalAttrs: {
   __structuredAttrs = true;
   strictDeps = true;
 
@@ -65,7 +65,7 @@ backendStdenv.mkDerivation (finalAttrs: {
         'CUDA_VERSION := ${cudaMajorMinorVersion}' \
       --replace-fail \
         'NVCCFLAGS ?= $(shell $(GET_CUDA_GENCODE) $(NVCC)) $(NVCC_STD)' \
-        'NVCCFLAGS ?= ${flags.gencodeString} $(NVCC_STD) -allow-unsupported-compiler' \
+        'NVCCFLAGS ?= ${flags.gencodeString} $(NVCC_STD)' \
       --replace-fail \
         'lib64' \
         'lib'
