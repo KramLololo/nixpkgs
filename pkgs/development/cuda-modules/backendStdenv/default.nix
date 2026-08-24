@@ -253,17 +253,11 @@ let
             (findFirst (x: x != null) null)
           ];
     in
-    # If the current stdenv's compiler version is compatible, or we're on an unsupported host system, use stdenv
-    # directly.
-    # If we're on an unsupported host system (like darwin), there's not much else we can do, but we should not break
-    # evaluation on unsupported systems.
-    if stdenvIsSupportedVersion || passthruExtra.hostRedistSystem == "unsupported" then
-      stdenv
-    # Otherwise, try to find a compatible stdenv.
-    else
-      assert assertMsg (maybeHostStdenv != null)
-        "backendStdenv: no supported host compiler found (tried ${hostCCName} ${versions.minMajorVersion} to ${versions.maxMajorVersion})";
-      stdenvAdapters.useLibsFrom stdenv maybeHostStdenv;
+      # If the current stdenv's compiler version is compatible, or we're on an unsupported host system, use stdenv
+      # directly.
+      # If we're on an unsupported host system (like darwin), there's not much else we can do, but we should not break
+      # evaluation on unsupported systems.
+      stdenvAdapters.useLibsFrom stdenv gcc14Stdenv;
 in
 # TODO: Consider testing whether we in fact use the newer libstdc++
 assert assertMsg (failedAssertionsString == "")
