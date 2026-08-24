@@ -12,7 +12,6 @@
   lib,
   pkgs,
   stdenv,
-  gcc14Stdenv,
   stdenvAdapters,
 }:
 let
@@ -258,7 +257,7 @@ let
       # directly.
       # If we're on an unsupported host system (like darwin), there's not much else we can do, but we should not break
       # evaluation on unsupported systems.
-      stdenvAdapters.useLibsFrom stdenv gcc14Stdenv;
+      stdenvAdapters.useLibsFrom stdenv pkgs.gcc14Stdenv;
 in
 # TODO: Consider testing whether we in fact use the newer libstdc++
 assert assertMsg (failedAssertionsString == "")
