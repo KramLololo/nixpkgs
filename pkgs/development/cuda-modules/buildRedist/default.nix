@@ -6,6 +6,7 @@
   autoAddDriverRunpath,
   autoPatchelfHook,
   backendStdenv,
+  gcc13Stdenv,
   cudaMajorMinorVersion,
   cudaMajorVersion,
   cudaNamePrefix,
@@ -103,7 +104,7 @@ let
       or null;
 in
 extendMkDerivation {
-  constructDrv = backendStdenv.mkDerivation;
+  constructDrv = gcc13Stdenv.mkDerivation;
   # These attributes are moved to passthru to avoid changing derivation hashes.
   excludeDrvArgNames = [
     # Core
