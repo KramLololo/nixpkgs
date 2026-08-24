@@ -65,7 +65,7 @@ backendStdenv.mkDerivation (finalAttrs: {
         'CUDA_VERSION := ${cudaMajorMinorVersion}' \
       --replace-fail \
         'NVCCFLAGS ?= $(shell $(GET_CUDA_GENCODE) $(NVCC)) $(NVCC_STD)' \
-        'NVCCFLAGS ?= ${flags.gencodeString} $(NVCC_STD)' \
+        'NVCCFLAGS ?= ${flags.gencodeString} $(NVCC_STD) -allow-unsupported-compiler' \
       --replace-fail \
         'lib64' \
         'lib'
