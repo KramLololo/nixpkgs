@@ -12,6 +12,7 @@
   lib,
   pkgs,
   stdenv,
+  gcc14Stdenv,
   stdenvAdapters,
 }:
 let
