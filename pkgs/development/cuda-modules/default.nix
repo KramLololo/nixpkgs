@@ -140,6 +140,7 @@ let
           fetchurl
           srcOnly
           stdenv
+          gcc13Stdenv
           stdenvNoCC
           zstd
           ;
