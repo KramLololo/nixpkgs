@@ -1,6 +1,7 @@
 {
   _cuda,
   backendStdenv,
+  gcc13Stdenv,
   buildRedist,
   setupCudaHook,
   cudaAtLeast,
@@ -156,13 +157,13 @@ buildRedist (finalAttrs: {
         nixLog "setting compiler-bindir to backendStdenv.cc in nvcc.profile"
         cat << EOF >> "''${!outputBin:?}/bin/nvcc.profile"
         # Fix a compatible backend compiler
-        compiler-bindir = ${backendStdenv.cc}/bin
+        compiler-bindir = ${gcc13Stdenv.cc}/bin
         EOF
 
         nixLog "wrapping nvcc to add backendStdenv.cc to its PATH"
         wrapProgramBinary \
           "''${!outputBin:?}/bin/nvcc" \
-          --prefix PATH : ${lib.makeBinPath [ backendStdenv.cc ]}
+          --prefix PATH : ${lib.makeBinPath [ gcc13Stdenv.cc ]}
       ''
       # Fix compatibility with glibc 2.42:
       # The cospi|sinpi|rsqrt function signatures in include/common/math_functions.h do not match
